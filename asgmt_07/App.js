@@ -1,10 +1,33 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View , Button} from 'react-native';
+import { Picker } from '@react-native-picker/picker';
+import { useEffect, useState } from 'react';
+import apiCall from './api';
 
 export default function App() {
+  const [currency, setCurrency] = useState("THIS IS TEXT");
+  const [currencyList, setCurrencyList] = useState({});
+
+  //https://api.apilayer.com/currency_data/
+  useEffect(() => {
+    if(!currencyList){
+      apiCall("symbols")
+      .then(data => setCurrencyList(data.currencies))
+      .catch(err => console.log("Error: " + err))
+    }
+  }, [currencyList])
+
   return (
     <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
+      <Text>Here: { currencyList["AED"] }</Text>
+      <Picker
+        selectedValue={currency}
+        onValueChange={(itemValue, itemIndex) =>
+          setCurrency(itemValue)
+        }>
+        <Picker.Item label="Java" value="java" />
+        <Picker.Item label="JavaScript" value="js" />
+      </Picker>
       <StatusBar style="auto" />
     </View>
   );

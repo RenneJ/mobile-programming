@@ -12,7 +12,7 @@ export default function App() {
 		amount: "",
 	});
 	const [products, setProducts] = useState([]);
-	// Document references are those auto-generated "record" identifiers
+	// Document references are those auto-generated "table" identifiers
 	const [docs, setDocs] = useState({});
 
 	useEffect(() => {
